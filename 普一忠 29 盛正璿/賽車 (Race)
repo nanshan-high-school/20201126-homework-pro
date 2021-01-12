@@ -1,0 +1,57 @@
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int a,n,b,now = 0;
+    cin >> n;
+    int x[n],y[n],answerX[n],answerY[n];
+    double slope;
+
+    memset(answerX,0,n);
+    memset(answerY,0,n);
+
+    for(int i = 0; i < n; i++){
+            cin >> x[i] >> y[i];
+    }
+
+    for(int i = 0; i < n; i++){
+        for(int j = i; j < n; j++){
+            if(x[i] > x[j]){
+                a = x[i];
+                x[i] = x[j];
+                x[j] = a;
+                a = y[i];
+                y[i] = y[j];
+                y[j] = a;
+            }
+        }
+    }
+    
+    a = 0;
+    now = 1;
+
+    answerX[0] = x[0];
+    answerY[0] = y[0];
+    slope = 100.0;
+
+    for(int i = 1; i < n; i++){
+        for(int j = i; j < n; j++){
+            if(slope >= (double)(y[j] - y[a]) / x[j] - x[a] && y[j] >= y[a]){
+                slope = (double)(y[j] - y[a]) / x[j] - x[a];
+                b = j;
+            }
+        }
+        a = b;
+        i = a;
+        cout << "\n";
+        answerX[now] = x[a];
+        answerY[now] = y[a];
+        now++;
+    }
+
+    for(int i = 0; i < now; i++){
+        cout << answerX[i] << " " << answerY[i] << "\n";
+    }
+}
